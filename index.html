@@ -7,7 +7,7 @@
       <h1>Todo List</h1>
       <ul>
         <li v-for="(todo, index) in todoList">
-          {{ todo }} <button @click="removeTodo">Remove</button>
+          {{ todo }} <button @click="removeTodo(index)">Remove</button>
         </li>
       </ul>
       <input type="text" v-model="newTodo" @keyup.enter="addTodo" />
