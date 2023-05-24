@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <body>
+    <div id="app">
+      <h1>Todo List</h1>
+      <ul>
+        <li v-for="(todo, index) in todoList">
+          {{ todo }} <button @click="removeTodo">Remove</button>
+        </li>
+      </ul>
+      <input type="text" v-model="newTodo" />
+      <button @click="addTodo">Add</button>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          newTodo: '',
+          todoList: ['Learn Vue', 'Learn Go', 'Learn Rust'],
+        };
+      },
+      methods: {
+        addTodo() {
+          this.todoList.push(this.newTodo);
+          this.newTodo = '';
+        },
+        removeTodo(index) {
+          this.todoList.splice(index, 1);
+        },
+      },
+    });
+    app.mount('#app');
+  </script>
+</html>
