@@ -10,7 +10,7 @@
           {{ todo }} <button @click="removeTodo">Remove</button>
         </li>
       </ul>
-      <input type="text" v-model="newTodo" />
+      <input type="text" v-model="newTodo" @keyup.enter="addTodo" />
       <button @click="addTodo">Add</button>
     </div>
   </body>
@@ -25,6 +25,8 @@
       },
       methods: {
         addTodo() {
+          if (!this.newTodo) return;
+
           this.todoList.push(this.newTodo);
           this.newTodo = '';
         },
