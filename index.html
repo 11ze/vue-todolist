@@ -1,40 +1,13 @@
 <!DOCTYPE html>
-<html>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
   <body>
-    <div id="app">
-      <h1>Todo List</h1>
-      <ul>
-        <li v-for="(todo, index) in todoList">
-          {{ todo }} <button @click="removeTodo(index)">Remove</button>
-        </li>
-      </ul>
-      <input type="text" v-model="newTodo" @keyup.enter="addTodo" />
-      <button @click="addTodo">Add</button>
-    </div>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
-
-  <script>
-    const app = Vue.createApp({
-      data() {
-        return {
-          newTodo: '',
-          todoList: ['Learn Vue', 'Learn Go', 'Learn Rust'],
-        };
-      },
-      methods: {
-        addTodo() {
-          if (!this.newTodo) return;
-
-          this.todoList.push(this.newTodo);
-          this.newTodo = '';
-        },
-        removeTodo(index) {
-          this.todoList.splice(index, 1);
-        },
-      },
-    });
-    app.mount('#app');
-  </script>
 </html>
