@@ -28,16 +28,17 @@ const deleteTodo = (index: number) => {
 </script>
 
 <template>
-  <div class="todolist">
+  <div class="todo-list">
     <h1 class="green">Todo List</h1>
-    <ul>
+    <ul style="list-style: none">
       <li v-for="(todo, index) in todoList" :key="index">
-        <input type="checkbox" v-model="todo.done" />
-        {{ todo.text }}
-        <button @click="deleteTodo(index)">Delete</button>
+        <el-checkbox v-model="todo.done" size="large">
+          {{ todo.text }}
+        </el-checkbox>
+        <el-button type="danger" @click="deleteTodo(index)">Delete</el-button>
       </li>
     </ul>
-    <input type="text" v-model="newTodo" @keyup.enter="addTodo" />
-    <button @click="addTodo">Add</button>
+    <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Please input" />
+    <el-button type="primary" @click="addTodo">Add</el-button>
   </div>
 </template>
