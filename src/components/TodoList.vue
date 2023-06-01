@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export interface Todo {
   id: number
@@ -7,17 +7,27 @@ export interface Todo {
   done: boolean
 }
 
-const todoList = ref<Todo[]>([
-  { id: 1, text: 'Learn Vue', done: false },
-  { id: 2, text: 'Learn Go', done: false },
-  { id: 3, text: 'Learn Rust', done: false }
-])
+const getTodoList = (): Todo[] => {
+  const todoList = localStorage.getItem('vue-todoList')
+  if (todoList) {
+    return JSON.parse(todoList)
+  }
+  return []
+}
+
+const setTodoList = (todoList: Todo[]) => {
+  localStorage.setItem('vue-todoList', JSON.stringify(todoList))
+}
+
+const todoList = ref(getTodoList())
+
 const newTodo = ref('')
 
 const maxId = () => {
-  return todoList.value.reduce((acc, cur) => {
-    return acc > cur.id ? acc : cur.id
-  }, 0)
+  if (todoList.value.length === 0) return 0
+  return todoList.value.reduce((prev, current) => {
+    return prev.id > current.id ? prev : current
+  }).id
 }
 
 const addTodo = () => {
@@ -33,15 +43,21 @@ const addTodo = () => {
 
 const deleteTodo = (id: number) => {
   const index = todoList.value.findIndex((todo) => todo.id === id)
+  if (index === -1) return
   todoList.value.splice(index, 1)
 }
+
+const watchTodoList = () => {
+  setTodoList(todoList.value)
+}
+watch(todoList, watchTodoList, { deep: true })
 </script>
 
 <template>
   <div class="todo-list">
     <h1 class="green">Todo List</h1>
     <ul style="list-style: none">
-      <li v-for="(todo) in todoList" :key="todo.id">
+      <li v-for="todo in todoList" :key="todo.id">
         <el-checkbox v-model="todo.done" size="large">
           {{ todo.text }}
         </el-checkbox>
